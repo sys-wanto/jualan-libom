@@ -80,9 +80,10 @@ class ItemController extends Controller
 
             foreach ($request->file('photos') as $photo) {
                 $photoPath = $photo->store('assets/item', 'public');
-
+                $exp_photo = explode('/', $photoPath);
+                $photo->move("assets/item", $exp_photo[2]);
                 // Store as json
-                array_push($photos, $photoPath);
+                array_push($photos, "assets/item/" . $exp_photo[2]);
             }
 
             $data['photos'] = json_encode($photos);

@@ -31,7 +31,7 @@ class Item extends Model
     public function getThumbnailAttribute() // thumbnail
     {
         if ($this->photos) {
-            return Storage::url(json_decode($this->photos)[0]);
+            return url('/', json_decode($this->photos)[0]);
         }
 
         return 'https://via.placeholder.com/800x600';
