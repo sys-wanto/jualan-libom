@@ -37,6 +37,18 @@ class Item extends Model
         return 'https://via.placeholder.com/800x600';
     }
 
+    public function getAllThumbnailAttribute()
+    {
+        if ($this->photos) {
+            $thumnail = [];
+            foreach (json_decode($this->photos) as $key => $value) {
+                $thumnail[] = $value;
+            }
+            return $thumnail;
+        }
+        return 'https://via.placeholder.com/800x600';
+    }
+
     public function type()
     {
         return $this->belongsTo(Type::class);

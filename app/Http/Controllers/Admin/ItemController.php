@@ -24,7 +24,12 @@ class ItemController extends Controller
 
             return DataTables::of($query)
                 ->editColumn('thumbnail', function ($item) {
-                    return '<img src="' . $item->thumbnail . '" alt="" class="w-20 mx-auto rounded-md">';
+
+                    $txt = '';
+                    foreach ($item->all_thumbnail as $key => $value) {
+                        $txt .= '<img src="' . url('/', $value) . '" alt="" class="w-20 mx-auto rounded-md">';
+                    }
+                    return $txt;
                 })
                 ->addColumn('action', function ($item) {
                     return '

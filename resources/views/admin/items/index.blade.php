@@ -24,8 +24,8 @@
                         name: 'id',
                     },
                     {
-                        data: 'photos',
-                        name: 'photos',
+                        data: 'thumbnail',
+                        name: 'thumbnail',
                     },
                     {
                         data: 'name',
