@@ -13,9 +13,12 @@ class CheckoutController extends Controller
     public function index(Request $request, $slug)
     {
         $item = Item::with(['type', 'brand'])->whereSlug($slug)->firstOrFail();
-
+        $instalment_period_list = [
+            '11 Bulan', '23 Bulan', '35 Bulan'
+        ];
         return view('checkout', [
-            'item' => $item
+            'item' => $item,
+            'instalment_period_list' => $instalment_period_list
         ]);
     }
 

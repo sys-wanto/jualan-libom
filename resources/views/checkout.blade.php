@@ -57,7 +57,7 @@
                         </div>
 
                         <!-- START: INPUT DATE -->
-                        {{-- <div class="col-span-2 grid grid-cols-2 gap-y-6 gap-x-4 lg:gap-x-[30px] relative"
+                        <div class="col-span-2 grid grid-cols-2 gap-y-6 gap-x-4 lg:gap-x-[30px] relative"
                             @keydown.escape="closeDatepicker()" @click.outside="closeDatepicker()">
                             <!-- Date From -->
                             <div class="flex flex-col col-span-1 gap-3">
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                             <!-- END: Date-Range Picker -->
-                        </div> --}}
+                        </div>
                         <!-- END: INPUT DATE -->
 
                         <!-- Delivery Address -->
@@ -187,20 +187,25 @@
 
                         <div class="flex flex-col col-span-2 gap-3">
                             <label for="" class="text-base font-semibold text-dark">
-                                Down Payment
+                                Down Payment (%)
                             </label>
-                            <select name="rencana_pembayaran" id="rencana_pembayaran"
-                                class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none">
-                                <option value="0"></option>
+                            <input type="number" name="downPayment" id="downPayment" required
+                                class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
+                                placeholder="Write Percentage" value="50" max="100"
+                                onkeyup="downpayment()">
                             </select>
                         </div>
                         <div class="flex flex-col col-span-2 gap-3">
                             <label for="" class="text-base font-semibold text-dark">
                                 Jumlah Tenor
                             </label>
-                            <select name="rencana_pembayaran" id="rencana_pembayaran"
-                                class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none">
-                                <option value="0"></option>
+                            <select name="rencana_pembayaran" id="instalmentPeriod"
+                                class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
+                                placeholder="Choose Period" onchange="downpayment()">
+
+                                @foreach ($instalment_period_list as $period)
+                                    <option value="{{ $period }}">{{ $period }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -219,8 +224,63 @@
                     </div>
                 </form>
 
-                <img src="{{ url('/', json_decode($item->photos)[0]) }}" class="max-w-[50%] hidden lg:block -mr-[200px]"
-                    alt="">
+                <div class="bg-white flex font-sans">
+                    <div class="flex-none w-48 relative">
+                        <img src="{{ url('/', json_decode($item->photos)[0]) }}" alt=""
+                            class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                    </div>
+                    <form class="flex-auto p-6">
+                        <div class="flex flex-wrap">
+                            <h1 class="flex-auto text-lg font-semibold text-slate-900">
+                                {{ $item->name }}
+                            </h1>
+                            <div class="text-lg font-semibold text-slate-500">
+                                {{ 'Rp.' . number_format($item->price) }}
+                            </div>
+                            <div class="w-full flex-none text-sm font-medium text-slate-700 mt-2">
+                                {{ $item->features }}
+                            </div>
+                        </div>
+                        <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
+                            <div class="space-x-2 flex text-sm">
+                                <label>
+                                    <div class="w-9 h-9 rounded-lg flex items-center justify-center font-semibold bg-slate-900 text-white"
+                                        id="percentage-calc">
+                                        50%
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                            <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
+                                id="down-payment-price-calc">
+                                Down Payment :
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                            <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
+                                id="tenor-payment-calc">
+                                Tenor :
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                            <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
+                                id="instalment-payment-calc">
+                                Instalment :
+                            </div>
+                        </div>
+                        {{-- <p class="text-sm text-slate-700">
+                            Free shipping on all continental US orders.
+                        </p> --}}
+                    </form>
+                </div>
+
+                {{-- <div class="flex p-6 font-mono">
+                    <div class="max-w-[50%] hidden lg:block -mr-[200px]">
+
+                        <img src="{{ url('/', json_decode($item->photos)[0]) }}" alt="">
+                    </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -231,6 +291,39 @@
         $('#checkoutButton').click(function() {
             $('#checkoutForm').submit();
         });
+
+        function downpayment() {
+            let Percentage = 0;
+            let period = $('#instalmentPeriod').find(":selected").val();
+            let price = {{ $item->price }}
+            let downPayment = 0;
+            let instalmentCalc = 0;
+            if ($('#downPayment').val()) {
+                if ($('#downPayment').val() > 81) {
+                    $('#downPayment').val(80)
+                }
+                instalmentCalc = 0;
+                downPayment = 0;
+            }
+            Percentage = parseInt($('#downPayment').val());
+            if (isNaN(Percentage)) {
+                $('#percentage-calc').text(`-`);
+                $('#down-payment-price-calc').text(`Down Payment : -`);
+                $('#instalment-payment-calc').text(`Tenor : -`);
+            } else {
+                let periodMonth = parseInt(period.split(' ')[0]);
+                downPayment = (parseInt({{ $item->price }}) / 100) * Percentage;
+                instalmentCalc = (price - downPayment) / periodMonth;
+                $('#percentage-calc').text(`${Percentage} %`);
+                $('#down-payment-price-calc').text(
+                    `Down Payment : Rp. ${downPayment}`);
+                $('#tenor-payment-calc').text(
+                    `Tenor : ${period}`);
+                $('#instalment-payment-calc').text(
+                    `Tenor : Rp.${Math.round(instalmentCalc)}`);
+
+            }
+        }
     </script>
 
 </x-front-layout>
