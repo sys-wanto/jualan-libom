@@ -24,6 +24,7 @@ class CheckoutController extends Controller
 
     public function store(Request $request, $slug)
     {
+        dd($request);
         // Validate the request
         $request->validate([
             'name' => 'required',

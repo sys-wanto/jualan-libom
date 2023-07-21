@@ -187,6 +187,18 @@
 
                         <div class="flex flex-col col-span-2 gap-3">
                             <label for="" class="text-base font-semibold text-dark">
+                                Jenis Pembayaran
+                            </label>
+                            <select name="jenis_pembayaran" id="jenis_pembayaran"
+                                class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
+                                placeholder="Payment Method" onchange="cek_jns_pembayaran()">
+                                <option value="cash"> Cash </option>
+                                <option value="credit" selected> Credit </option>
+
+                            </select>
+                        </div>
+                        <div class="flex flex-col col-span-2 gap-3 credit-view">
+                            <label for="" class="text-base font-semibold text-dark">
                                 Down Payment (%)
                             </label>
                             <input type="number" name="downPayment" id="downPayment" required
@@ -195,7 +207,7 @@
                                 onkeyup="downpayment()">
                             </select>
                         </div>
-                        <div class="flex flex-col col-span-2 gap-3">
+                        <div class="flex flex-col col-span-2 gap-3 credit-view">
                             <label for="" class="text-base font-semibold text-dark">
                                 Jumlah Tenor
                             </label>
@@ -254,19 +266,20 @@
                         <div class="flex space-x-4 mb-2 text-sm font-medium">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="down-payment-price-calc">
-                                Down Payment :
+                                Down Payment : {{ 'Rp.' . number_format(($item->price / 100) * 50) }}
                             </div>
                         </div>
                         <div class="flex space-x-4 mb-2 text-sm font-medium">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="tenor-payment-calc">
-                                Tenor :
+                                Tenor : 11 Bulan
                             </div>
                         </div>
                         <div class="flex space-x-4 mb-2 text-sm font-medium">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="instalment-payment-calc">
                                 Instalment :
+                                {{ 'Rp.' . number_format(($item->price - ($item->price / 100) * 50) / 11) }}
                             </div>
                         </div>
                         {{-- <p class="text-sm text-slate-700">
@@ -314,6 +327,15 @@
             }
             formatted = output.reverse().join("");
             return ("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ""));
+        }
+
+        function cek_jns_pembayaran() {
+            let jns_pembayaran = $('#jenis_pembayaran').find(":selected").val();
+            if (jns_pembayaran == 'cash') {
+                $('.credit-view').addClass('hidden');
+            } else {
+                $('.credit-view').removeClass('hidden');
+            }
         }
 
         function downpayment() {
