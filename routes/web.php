@@ -30,7 +30,7 @@ use App\Http\Controllers\Front\ProductController;
 Route::name('front.')->group(function () {
     Route::get('/', [LandingController::class, 'index'])->name('index');
     Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
-    //Route::get('product', [ProductController::class, 'index'])->name('index');
+    Route::get('/product', [ProductController::class, 'index'])->name('product');
     // Route::resource('product', ProductController::class)->name('product', 'index');
 
     Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
