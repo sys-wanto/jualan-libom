@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -52,4 +54,22 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::resource('types', AdminTypeController::class);
     Route::resource('items', AdminItemController::class);
     Route::resource('bookings', AdminBookingController::class);
+});
+
+Route::prefix('manager')->name('manager.')->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'manager'
+])->group(function () {
+    Route::get('/dashboard', [ManagerDashboardController::class, 'index'])->name('dashboard');
+});
+
+Route::prefix('user')->name('user.')->middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'user'
+])->group(function () {
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 });

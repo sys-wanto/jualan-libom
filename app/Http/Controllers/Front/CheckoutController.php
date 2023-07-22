@@ -24,7 +24,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request, $slug)
     {
-        dd($request);
         // Validate the request
         $request->validate([
             'name' => 'required',
@@ -40,16 +39,32 @@ class CheckoutController extends Controller
         $end_date = Carbon::createFromFormat('d m Y', $request->end_date);
 
         // Count the number of days between start_date and end_date
-        $days = $start_date->diffInDays($end_date);
+        // $days = $start_date->diffInDays($end_date);
 
         // Get the item
         $item = Item::whereSlug($slug)->firstOrFail();
+        if ($request->jenis_pembayaran == 'cash') {
+            //beban/pajak 10% = harga barang * 10%
+            $tax = $item->price * 0.1;
+            //total harga = harga barang + beban/pajak 10%
+            $total_price = $item->price + $tax;
+        } else {
+            // Jumlah Cicilan
+            $period_month = explode(' ', $request->rencana_pembayaran)[0];
+            //DP = harga barang * persen DP
+            $down_payment = ($item->price / 100) * $request->downPayment;
+            //cicilan_termasuk_beban_pajak_10_persen = ((harga barang - DP) / jumlah cicilan)
+            $instalment = (($item->price - $down_payment) / intval($period_month));
+            //beban/pajak 10% = harga barang * 10%
+            $tax = $item->price * 0.1;
+            //total harga = DP + cicilann*jumlah_cicilan + beban/pajak 10%;
+            $total_price = $down_payment + ($instalment * intval($period_month)) + $tax;
+        }
+        // // Calculate the total price
+        // $total_price = $days * $item->price;
 
-        // Calculate the total price
-        $total_price = $days * $item->price;
-
-        // Add 10% tax
-        $total_price = $total_price + ($total_price * 0.1);
+        // // Add 10% tax
+        // $total_price = $total_price + ($total_price * 0.1);
 
         // Create a new booking
         $booking = $item->bookings()->create([

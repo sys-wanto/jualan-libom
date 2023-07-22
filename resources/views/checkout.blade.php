@@ -253,33 +253,60 @@
                                 {{ $item->features }}
                             </div>
                         </div>
-                        <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200">
+                        <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200 credit-view">
                             <div class="space-x-2 flex text-sm">
                                 <label>
                                     <div class="w-9 h-9 rounded-lg flex items-center justify-center font-semibold bg-slate-900 text-white"
                                         id="percentage-calc">
-                                        50%
+                                        50 %
                                     </div>
                                 </label>
                             </div>
                         </div>
-                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                        <div class="flex items-baseline mt-4 mb-6 pb-6 border-b border-slate-200 cash-view">
+                            <div class="space-x-2 flex text-sm">
+                                <label>
+                                    <div class="w-12 h-9 rounded-lg flex items-center justify-center font-semibold bg-slate-900 text-white"
+                                        id="percentage-calc">
+                                        CASH
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium credit-view">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="down-payment-price-calc">
                                 Down Payment : {{ 'Rp.' . number_format(($item->price / 100) * 50) }}
                             </div>
                         </div>
-                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                        <div class="flex space-x-4 mb-2 text-sm font-medium credit-view">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="tenor-payment-calc">
                                 Tenor : 11 Bulan
                             </div>
                         </div>
-                        <div class="flex space-x-4 mb-2 text-sm font-medium">
+                        <div class="flex space-x-4 mb-2 text-sm font-medium credit-view">
                             <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
                                 id="instalment-payment-calc">
                                 Instalment :
-                                {{ 'Rp.' . number_format(($item->price - ($item->price / 100) * 50) / 11) }}
+                                {{ 'Rp.' . number_format(($item->price - ($item->price / 100) * 50) / 11) }} <p
+                                    class="italic text-inherit">(*Tax 10%/month)</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium credit-view">
+                            <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
+                                id="total-payment-calc">
+                                Total Price :
+                                {{ 'Rp.' . number_format($item->price - ($item->price / 100) * 50) }} <p
+                                    class="italic text-inherit">(*Tax 10%/month)</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-4 mb-2 text-sm font-medium cash-view">
+                            <div class="h-9 pl-2 items-center text-white flex-auto flex space-x-4 bg-slate-700"
+                                id="cash-payment-calc">
+                                Cash :
+                                {{ 'Rp.' . number_format($item->price + $item->price * 0.1) }} <p
+                                    class="italic text-inherit">&ensp;(*Tax 10%)</p>
                             </div>
                         </div>
                         {{-- <p class="text-sm text-slate-700">
@@ -300,12 +327,16 @@
 
     <script src="/js/dateRangePicker.js"></script>
     <script>
+        (function() {
+            cek_jns_pembayaran();
+            downpayment();
+        })()
         // on checkoutButton click, submit the form
         $('#checkoutButton').click(function() {
             $('#checkoutForm').submit();
         });
 
-        var format = (num) => {
+        function format(num) {
             var str = num.toString().replace("", ""),
                 parts = false,
                 output = [],
@@ -332,9 +363,11 @@
         function cek_jns_pembayaran() {
             let jns_pembayaran = $('#jenis_pembayaran').find(":selected").val();
             if (jns_pembayaran == 'cash') {
+                $('.cash-view').removeClass('hidden');
                 $('.credit-view').addClass('hidden');
             } else {
                 $('.credit-view').removeClass('hidden');
+                $('.cash-view').addClass('hidden');
             }
         }
 
@@ -344,6 +377,7 @@
             let price = {{ $item->price }}
             let downPayment = 0;
             let instalmentCalc = 0;
+            let totalPrice = 0;
             if ($('#downPayment').val()) {
                 if ($('#downPayment').val() > 81) {
                     $('#downPayment').val(80)
@@ -359,14 +393,19 @@
             } else {
                 let periodMonth = parseInt(period.split(' ')[0]);
                 downPayment = (parseInt({{ $item->price }}) / 100) * Percentage;
-                instalmentCalc = (price - downPayment) / periodMonth;
+                instalmentCalc = ((price - downPayment) / periodMonth);
+                let totalPrice = Math.ceil(instalmentCalc) * periodMonth + downPayment;
+                totalPrice = totalPrice + ((totalPrice / 100) * 10);
                 $('#percentage-calc').text(`${Percentage} %`);
                 $('#down-payment-price-calc').text(
                     `Down Payment : Rp. ${format(downPayment)}`);
                 $('#tenor-payment-calc').text(
                     `Tenor : ${period}`);
                 $('#instalment-payment-calc').text(
-                    `Tenor : Rp.${format(Math.round(instalmentCalc))}`);
+                    `Instalment : Rp.${format(Math.ceil(instalmentCalc))}`
+                );
+                $('#total-payment-calc').html(
+                    `Total Price : Rp.${Math.ceil(totalPrice)}&ensp; <p class="italic text-inherit">(*Tax 10%)</p>`)
 
             }
         }
