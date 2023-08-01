@@ -30,6 +30,9 @@ class PaymentController extends Controller
     public function update(Request $request, $bookingId)
     {
         $booking = Booking::findOrFail($bookingId);
+        if($booking->payment_url != null){
+            return redirect($booking->payment_url);
+        }
         $booking->payment_method = $request->payment_method;
 
         if ($request->payment_method == 'midtrans') {
@@ -40,8 +43,8 @@ class PaymentController extends Controller
             \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
 
             // Get USD to IDR rate using guzzle
-            $client = new \GuzzleHttp\Client();
-            $response = $client->request('GET', 'https://api.exchangerate-api.com/v4/latest/USD');
+            $client = new \GuzzleHttp\Client(array('curl' => array(CURLOPT_SSL_VERIFYPEER => false, ), ));
+            $response = $client->request('GET', 'https://api.exchangerate-api.com/v4/latest/IDR');
             $body = $response->getBody();
             $rate = json_decode($body)->rates->IDR;
 

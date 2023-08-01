@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Brand;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -34,8 +35,9 @@ class DashboardController extends Controller
                 ->rawColumns(['action'])
                 ->make();
         }
-        $pembelian = Booking::all();
-        $item = Item::all();
-        return view('manager.dashboard');
+        $pembelianGroup = Booking::groupBy('status')->selectRaw('count(*) as total, status')->get()->toArray();
+        return view('manager.dashboard', [
+            'pembelians' => $pembelianGroup,
+        ]);
     }
 }

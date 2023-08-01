@@ -50,48 +50,45 @@
                         data: 'total_price',
                         name: 'total_price'
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false,
-                        width: '15%'
-                    },
                 ],
             });
 
+            let color_pembelian = [];
+            var dynamicColors = function() {
+                var r = Math.floor(Math.random() * 255);
+                var g = Math.floor(Math.random() * 255);
+                var b = Math.floor(Math.random() * 255);
+                return "rgb(" + r + "," + g + "," + b + ")";
+                if (!color_pembelian.has(color)) {
+                    color_pembelian.add(color);
+                    return color;
+                } else {
+                    return dynamicColors();
+                }
+            };
+
             // AJAX chartjs
             (function() {
-                const ctx = document.getElementById('myChart');
 
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                        datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
+                let pembelian_arr = {!! json_encode($pembelians) !!};
+                console.log(pembelian_arr);
+                let label_pembelian = [];
+                let data_pembelian = [];
+                pembelian_arr.forEach(element => {
+                    color_pembelian.push(dynamicColors())
+                    label_pembelian.push(element['status'])
+                    data_pembelian.push(element['total'])
                 });
-
                 const ctx2 = document.getElementById('myChart2');
 
                 new Chart(ctx2, {
                     type: 'bar',
                     data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        labels: label_pembelian,
                         datasets: [{
-                            label: '# of Votes',
-                            data: [12, 19, 3, 5, 2, 3],
+                            label: 'Pembelian',
+                            backgroundColor: color_pembelian,
+                            data: data_pembelian,
                             borderWidth: 1
                         }]
                     },
@@ -115,6 +112,11 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
+                <div class="columns-2">
+                    <div class="px-4 py-5 bg-white sm:p-6">
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
                 <div class="columns-1">
                     <div class="px-4 py-5 bg-white sm:p-6">
                         <table id="dataTable">
@@ -129,19 +131,10 @@
                                     <th>Status Booking</th>
                                     <th>Status Pembayaran</th>
                                     <th>Total Dibayar</th>
-                                    <th style="max-width: 1%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
-                    </div>
-                </div>
-                <div class="columns-2">
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <canvas id="myChart"></canvas>
-                    </div>
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <canvas id="myChart2"></canvas>
                     </div>
                 </div>
             </div>

@@ -56,6 +56,15 @@
                             <a href="{{ route('front.product') }}" class="nav-link-item">Product</a>
                             <a href="#!" class="nav-link-item">FAQ/Tanya dengan BOT</a>
                             <a href="#!" class="nav-link-item">Maps</a>
+                            @if (request()->user() != null)
+                                @if (request()->user()->roles == 'MANAGER')
+                                    <a href="{{ route('manager.dashboard') }}" class="nav-link-item">Dashboard</a>
+                                @elseif(request()->user()->roles == 'USER')
+                                    <a href="{{ route('user.dashboard') }}" class="nav-link-item">Dashboard</a>
+                                @elseif(request()->user()->roles == 'ADMIN')
+                                    <a href="{{ route('admin.dashboard') }}" class="nav-link-item">Dashboard</a>
+                                @endif
+                            @endif
                         </div>
                         @auth
                             <div class="flex flex-col w-full ml-auto lg:w-auto lg:gap-12 lg:items-center lg:flex-row">
