@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\endController;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ use App\Http\Controllers\Front\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/end',[endController::class,'midtrans_call_back'])->name('end');
 Route::name('front.')->group(function () {
     Route::get('/', [LandingController::class, 'index'])->name('index');
     Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
