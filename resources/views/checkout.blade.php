@@ -220,7 +220,12 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="col-span-2 mt-[26px]" id="showWarning">
+                            <!-- Button Primary -->
+                            <div class="p-1 rounded-full bg-red-700 group text-white text-center">
+                                Jumlah Down Payment kurang dari Rp. 2.000.000
+                            </div>
+                        </div>
                         <!-- CTA Button -->
                         <div class="col-span-2 mt-[26px]">
                             <!-- Button Primary -->
@@ -385,6 +390,8 @@
                 instalmentCalc = 0;
                 downPayment = 0;
             }
+
+
             Percentage = parseInt($('#downPayment').val());
             if (isNaN(Percentage)) {
                 $('#percentage-calc').text(`-`);
@@ -407,6 +414,18 @@
                 $('#total-payment-calc').html(
                     `Total Price : Rp.${Math.ceil(totalPrice)}&ensp; <p class="italic text-inherit">(*Tax 10%)</p>`)
 
+            }
+
+            if (instalmentCalc >= 2000000) {
+                $('#showWarning').hide();
+                $('#checkoutButton').removeClass('bg-red-700');
+                $('#checkoutButton').addClass('bg-blue-700');
+                $('#checkoutButton').bind('click');
+            } else {
+                $('#showWarning').show();
+                $('#checkoutButton').removeClass('bg-blue-700');
+                $('#checkoutButton').addClass('bg-red-700');
+                $('#checkoutButton').unbind('click');
             }
         }
     </script>

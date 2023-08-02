@@ -48,17 +48,20 @@ class CheckoutController extends Controller
             $tax = $item->price * 0.1;
             //total harga = harga barang + beban/pajak 10%
             $total_price = $item->price + $tax;
+            $percent_credit = 100;
         } else {
             // Jumlah Cicilan
-            $period_month = explode(' ', $request->rencana_pembayaran)[0];
+            // $period_month = explode(' ', $request->rencana_pembayaran)[0];
             //DP = harga barang * persen DP
             $down_payment = ($item->price / 100) * $request->downPayment;
+            $percent_credit = $request->downPayment;
             //cicilan_termasuk_beban_pajak_10_persen = ((harga barang - DP) / jumlah cicilan)
-            $instalment = (($item->price - $down_payment) / intval($period_month));
+            // $instalment = (($item->price - $down_payment) / intval($period_month));
             //beban/pajak 10% = harga barang * 10%
             $tax = $item->price * 0.1;
             //total harga = DP + cicilann*jumlah_cicilan + beban/pajak 10%;
-            $total_price = $down_payment + ($instalment * intval($period_month)) + $tax;
+            // $total_price = $down_payment + ($instalment * intval($period_month)) + $tax;
+            $total_price = $down_payment + $tax;
         }
         // // Calculate the total price
         // $total_price = $days * $item->price;
@@ -75,6 +78,7 @@ class CheckoutController extends Controller
             'city' => $request->city,
             'zip' => $request->zip,
             'user_id' => auth()->user()->id,
+            'percent_credit' => $percent_credit,
             'total_price' => $total_price
         ]);
 

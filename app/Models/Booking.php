@@ -21,6 +21,7 @@ class Booking extends Model
         'payment_method',
         'payment_status',
         'payment_url',
+        'percent_credit',
         'total_price',
         'item_id',
         'user_id',

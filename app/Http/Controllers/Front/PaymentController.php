@@ -12,7 +12,6 @@ class PaymentController extends Controller
     public function index(Request $request, $bookingId)
     {
         $booking = Booking::with(['item.brand', 'item.type'])->findOrFail($bookingId);
-
         return view('payment', [
             'booking' => $booking
         ]);
@@ -21,7 +20,7 @@ class PaymentController extends Controller
     public function detail(Request $request, $bookingId)
     {
         $booking = Booking::with(['item.brand', 'item.type'])->findOrFail($bookingId);
-
+        
         return view('payment-detail', [
             'booking' => $booking
         ]);

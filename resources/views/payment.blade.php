@@ -53,7 +53,7 @@
                                     Price
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->item->price }} per day
+                                    ${{ $booking->item->price * ($booking->percent_credit/100) }}
                                 </p>
                             </div>
                             <!-- Items -->
@@ -62,7 +62,7 @@
                                     VAT (10%)
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->item->price * $booking->start_date->diffInDays($booking->end_date) * (10 / 100) }}
+                                    ${{ $booking->total_price - $booking->item->price * ($booking->percent_credit/100)}}
                                 </p>
                             </div>
                             <!-- Items -->
@@ -71,7 +71,7 @@
                                     Grand total
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->total_price }}
+                                    ${{ $booking->total_price  }}
                                 </p>
                             </div>
                         </div>

@@ -54,7 +54,8 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://192.168.43.145:7080'),
+    // 'url' => env('APP_URL', 'https://jualanlibom.invinic.site'),
 
     'asset_url' => env('ASSET_URL'),
 
