@@ -23,7 +23,7 @@
                             <!-- Items -->
                             <div class="flex items-center justify-between">
                                 <p class="text-base font-normal">
-                                    Car choosen
+                                    Pilihanmu
                                 </p>
                                 <p class="text-base font-semibold">
                                     {{ $booking->item->brand->name }} {{ $booking->item->name }}
@@ -32,7 +32,7 @@
                             <!-- Items -->
                             <div class="flex items-center justify-between">
                                 <p class="text-base font-normal">
-                                    Total day
+                                    Rencana Pembelian
                                 </p>
                                 <p class="text-base font-semibold">
                                     {{ $booking->start_date->diffInDays($booking->end_date) }} days
@@ -53,16 +53,16 @@
                                     Price
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->item->price * ($booking->percent_credit/100) }}
+                                    Rp.{{ $booking->item->price * ($booking->percent_credit/100) }}
                                 </p>
                             </div>
                             <!-- Items -->
                             <div class="flex items-center justify-between">
                                 <p class="text-base font-normal">
-                                    VAT (10%)
+                                    Pajak (10%)
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->total_price - $booking->item->price * ($booking->percent_credit/100)}}
+                                    Rp.{{ $booking->total_price - $booking->item->price * ($booking->percent_credit/100)}}
                                 </p>
                             </div>
                             <!-- Items -->
@@ -71,7 +71,7 @@
                                     Grand total
                                 </p>
                                 <p class="text-base font-semibold">
-                                    ${{ $booking->total_price  }}
+                                    Rp.{{ $booking->total_price  }}
                                 </p>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                 Payment Method
                             </h5>
                             <div class="grid md:grid-cols-2 gap-4 md:gap-[30px] items-center">
-                                <div class="relative boxPayment opacity-30">
+                                {{-- <div class="relative boxPayment opacity-30">
                                     <input type="radio" value="mastercard" name="payment_method" id="mastercard"
                                         class="absolute inset-0 z-50 opacity-0 cursor-pointer" disabled>
                                     <label for="mastercard"
@@ -90,7 +90,7 @@
                                             MasterCard
                                         </p>
                                     </label>
-                                </div>
+                                </div> --}}
                                 <div class="relative boxPayment">
                                     <input type="radio" value="midtrans" name="payment_method" id="midtrans"
                                         @checked(true)
@@ -109,18 +109,17 @@
                         <div class="col-span-2 mt-5">
                             <!-- Button Primary -->
                             <div class="p-1 rounded-full bg-primary group">
-                                <a href="#!" class="btn-primary" id="checkoutButton">
-                                    <p>
-                                        Continue
-                                    </p>
-                                    <img src="/svgs/ic-arrow-right.svg" alt="">
-                                </a>
+                            <a href="#!" class="btn-primary" id="checkoutButton">
+                                <p>
+                                Continue
+                                </p>
+                                <img src="/svgs/ic-arrow-right.svg" alt="">
+                            </a>
                             </div>
                         </div>
-                    </div>
-                </form>
-                <img src="/images/porsche_small.webp" class="max-w-[50%] hidden lg:block -mr-[200px]" alt="">
-            </div>
+                        </div>
+                    </form>
+                </div>
         </div>
     </section>
     <script>
