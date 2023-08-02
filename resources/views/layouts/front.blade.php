@@ -54,8 +54,8 @@
                         <div
                             class="flex flex-col w-full ml-auto lg:w-auto gap-4 lg:gap-[50px] lg:items-center lg:flex-row">
                             <a href="{{ route('front.product') }}" class="nav-link-item">Product</a>
-                            <a href="#!" class="nav-link-item">FAQ/Tanya dengan BOT</a>
-                            <a href="#!" class="nav-link-item">Maps</a>
+                            <a href="whatsapp://send?text=Hello Alan!&phone=+62881027209940">Tanya dengan Alan</a>
+
                             @if (request()->user() != null)
                                 @if (request()->user()->roles == 'MANAGER')
                                     <a href="{{ route('manager.dashboard') }}" class="nav-link-item">Dashboard</a>

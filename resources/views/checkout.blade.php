@@ -62,7 +62,7 @@
                             <!-- Date From -->
                             <div class="flex flex-col col-span-1 gap-3">
                                 <label for="" class="text-base font-semibold text-dark">
-                                    From
+                                    Rencana Pembelian
                                 </label>
                                 <input readonly type="text"
                                     class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
@@ -72,7 +72,7 @@
                             <!-- Date Until -->
                             <div class="flex flex-col col-span-1 gap-3">
                                 <label for="" class="text-base font-semibold text-dark">
-                                    Until
+                                    Sampai
                                 </label>
                                 <input readonly type="text"
                                     class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
@@ -166,7 +166,7 @@
                             </label>
                             <input type="text" name="city" id="city" required
                                 class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none"
-                                placeholder="City Name">
+                                placeholder="Contoh: Malang">
                         </div>
 
                         <!-- Post Code -->
@@ -416,7 +416,7 @@
 
             }
 
-            if (instalmentCalc >= 2000000) {
+            if (instalmentCalc >= 200000) {
                 $('#showWarning').hide();
                 $('#checkoutButton').removeClass('bg-red-700');
                 $('#checkoutButton').addClass('bg-blue-700');
