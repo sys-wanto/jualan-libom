@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\TypeController as AdminTypeController;
 use App\Http\Controllers\Admin\ItemController as AdminItemController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
-
+use App\Http\Controllers\Admin\Dati2Controller;
+use App\Http\Controllers\Admin\PropinsiController;
 use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\DetailController;
 use App\Http\Controllers\Front\CheckoutController;
@@ -27,22 +28,10 @@ use App\Http\Controllers\Front\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/end',[endController::class,'midtrans_call_back'])->name('end');
-Route::name('front.')->group(function () {
-    Route::get('/', [LandingController::class, 'index'])->name('index');
-    Route::get('/detail/{slug}', [DetailController::class, 'index'])->name('detail');
-    Route::get('/product', [ProductController::class, 'index'])->name('product');
-    // Route::resource('product', ProductController::class)->name('product', 'index');
 
-    Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::redirect('/', '/login', 301);
 
-    Route::group(['middleware' => 'auth'], function () {
-        Route::get('/checkout/{slug}', [CheckoutController::class, 'index'])->name('checkout');
-        Route::post('/checkout/{slug}', [CheckoutController::class, 'store'])->name('checkout.store');
-        Route::get('/payment/{bookingId}', [PaymentController::class, 'index'])->name('payment');
-        Route::post('/payment/{bookingId}', [PaymentController::class, 'update'])->name('payment.update');
-    });
-});
+
 
 Route::prefix('admin')->name('admin.')->middleware([
     'auth:sanctum',
@@ -51,10 +40,12 @@ Route::prefix('admin')->name('admin.')->middleware([
     'admin'
 ])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('brands', AdminBrandController::class);
-    Route::resource('types', AdminTypeController::class);
-    Route::resource('items', AdminItemController::class);
-    Route::resource('bookings', AdminBookingController::class);
+    // Route::get('/propins', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('propinsi', PropinsiController::class);
+    Route::resource('dati2', Dati2Controller::class);
+    Route::get('dati2/{KD_PROPINSI}/{KD_KABUPATEN}/edit', [KabupatenController::class,'edit'])->name('dati2.editnew');
+    Route::put('dati2/{KD_PROPINSI}/{KD_KABUPATEN}', [KabupatenController::class,'update']);
+    Route::delete('dati2/{KD_PROPINSI}/{KD_KABUPATEN}', [KabupatenController::class,'destroy']);
 });
 
 Route::prefix('manager')->name('manager.')->middleware([

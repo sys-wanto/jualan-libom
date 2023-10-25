@@ -18,23 +18,13 @@
                         </x-jet-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('admin.brands.index') }}" :active="request()->routeIs('admin.brands.index')">
-                            {{ __('Brand') }}
+                        <x-jet-nav-link href="{{ route('admin.propinsi.index') }}" :active="request()->routeIs('admin.propinsi.index')">
+                            {{ __('Propinsi') }}
                         </x-jet-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
-                            {{ __('Type') }}
-                        </x-jet-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('admin.items.index') }}" :active="request()->routeIs('admin.items.index')">
-                            {{ __('Item') }}
-                        </x-jet-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-jet-nav-link href="{{ route('admin.bookings.index') }}" :active="request()->routeIs('admin.bookings.index')">
-                            {{ __('Booking') }}
+                        <x-jet-nav-link href="{{ route('admin.dati2.index') }}" :active="request()->routeIs('admin.dati2.index')">
+                            {{ __('Kabupaten') }}
                         </x-jet-nav-link>
                     </div>
                 @elseif (auth()->user()->roles == 'MANAGER')
@@ -184,20 +174,24 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+                                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-jet-nav-link>
+                    </div> -->
+                    <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('admin.propinsi.index') }}" :active="request()->routeIs('admin.propinsi.index')">
+                            {{ __('Propinsi') }}
+                        </x-jet-nav-link>
+                    </div> -->
             <x-jet-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.brands.index') }}" :active="request()->routeIs('admin.brands.index')">
-                {{ __('Brand') }}
+            <x-jet-responsive-nav-link href="{{ route('admin.propinsi.index') }}" :active="request()->routeIs('admin.propinsi.index')">
+                {{ __('Propinsi') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
-                {{ __('Type') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.items.index') }}" :active="request()->routeIs('admin.items.index')">
-                {{ __('Item') }}
-            </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.bookings.index') }}" :active="request()->routeIs('admin.bookings.index')">
-                {{ __('Booking') }}
+            <x-jet-responsive-nav-link href="{{ route('admin.dati2.index') }}" :active="request()->routeIs('admin.dati2.index')">
+                {{ __('Kabupaten') }}
             </x-jet-responsive-nav-link>
         </div>
 

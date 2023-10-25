@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AdminSeeder extends Seeder
@@ -15,25 +16,37 @@ class AdminSeeder extends Seeder
     public function run()
     {
         // Create new user with role admin
-        \App\Models\User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => bcrypt('admin123'),
-            'roles' => 'ADMIN',
-        ]);
+        // User::truncate();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Manager',
-            'email' => 'manager@gmail.com',
-            'password' => bcrypt('manager123'),
-            'roles' => 'MANAGER',
-        ]);
+        $users = [
+            [
+                'email'         => 'admin@admin.com',
+                'name'          => 'ADMINISTRATOR',
+                'password'      => bcrypt('234234'),
+                'roles'       => 'ADMIN'
+            ],
+        ];
 
-        \App\Models\User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@gmail.com',
-            'password' => bcrypt('user123'),
-            'roles' => 'USER',
-        ]);
+        User::insert($users);
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Admin',
+        //     'email' => 'admin@gmail.com',
+        //     'password' => bcrypt('admin123'),
+        //     'roles' => 'ADMIN',
+        // ]);
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Manager',
+        //     'email' => 'manager@gmail.com',
+        //     'password' => bcrypt('manager123'),
+        //     'roles' => 'MANAGER',
+        // ]);
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'User',
+        //     'email' => 'user@gmail.com',
+        //     'password' => bcrypt('user123'),
+        //     'roles' => 'USER',
+        // ]);
     }
 }

@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('brands', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('name');
-            $table->string('slug')->unique();
+        Schema::create('kecamatan', function (Blueprint $table) {
+            // $table->id();
+            $table->char('kd_propinsi', 2);
+            $table->char('kd_dati2', 2);
+            $table->char('kd_kecamatan', 3);
+            $table->string('nm_kecamatan')->nullable();
+            $table->foreign(['kd_propinsi','kd_dati2'])->references(['kd_propinsi','kd_dati2'])->on('dati2');
+            $table->primary(['kd_propinsi','kd_dati2','kd_kecamatan']);
 
             $table->softDeletes();
             $table->timestamps();
