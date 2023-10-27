@@ -7,6 +7,9 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\PropinsiRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Dati2;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
 
 class PropinsiController extends Controller
@@ -83,7 +86,16 @@ class PropinsiController extends Controller
      */
     public function show(Propinsi $Propinsi)
     {
-        //
+        
+    }
+    public function getdati2($Propinsi){
+        return response()->json(Dati2::where('kd_propinsi',$Propinsi)->get());
+    }
+    public function getkecamatan($Propinsi,$kd_dati2){
+        return response()->json(Kecamatan::where(['kd_propinsi'=>$Propinsi,'kd_dati2'=>$kd_dati2])->get());
+    }
+    public function getkelurahan($Propinsi,$kd_dati2,$kecamatan){
+        return response()->json(Kelurahan::where(['kd_propinsi'=>$Propinsi,'kd_dati2'=>$kd_dati2,'kd_kecamatan'=>$kecamatan])->get());
     }
 
     /**

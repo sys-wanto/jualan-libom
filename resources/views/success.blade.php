@@ -13,12 +13,12 @@
           </header>
           <!-- Button Primary -->
           <div class="p-1 rounded-full bg-primary group w-[220px]">
-            <a href="{{ route('front.index') }}" class="btn-primary">
+            <!-- <a href="{{ route('front.index') }}" class="btn-primary">
               <p>
                 My Dashboard
               </p>
               <img src="/svgs/ic-arrow-right.svg" alt="">
-            </a>
+            </a> -->
           </div>
         </div>
         <img src="/images/porsche_small.webp" class="max-w-[50%] hidden lg:block -mr-[100px]" alt="">

@@ -32,9 +32,9 @@
                 <!-- Logo & Toggler Button here -->
                 <div class="flex items-center justify-between">
                     <!-- LOGO -->
-                    <a href="{{ route('front.index') }}">
+                    <!-- <a href="{{ route('front.index') }}">
                         <img src="/svgs/logo.svg" alt="stream" />
-                    </a>
+                    </a> -->
                     <!-- RESPONSIVE NAVBAR BUTTON TOGGLER -->
                     <div class="block lg:hidden">
                         <button class="p-1 outline-none mobileMenuButton" id="navbarToggler" data-target="#navigation">

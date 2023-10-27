@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class Dati2Request extends FormRequest
+class KecamatanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class Dati2Request extends FormRequest
         return [
             'kd_propinsi'             => 'Kode Propinsi',
             'kd_dati2'             => 'Kode Kabupaten',
-            'nm_dati2'              => 'Nama Kabupaten'
+            'kd_kecamatan'             => 'Kode Kecamatan',
+            'nm_kecamatan'              => 'Nama Kecamatan'
         ];
     }
 
@@ -36,7 +37,8 @@ class Dati2Request extends FormRequest
         return [
             'kd_propinsi' => 'required|numeric|max_digits:2',
             'kd_dati2' => 'required|numeric|max_digits:2',
-            'nm_dati2' => 'required|string|max:255',
+            'kd_kecamatan' => 'required|numeric|max_digits:3',
+            'nm_kecamatan' => 'required|string|max:255',
         ];
     }
 }

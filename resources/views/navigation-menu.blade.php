@@ -5,9 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
-                    <a href="{{ route('front.index') }}">
-                        <x-jet-application-mark class="block w-auto h-9" />
-                    </a>
+
                 </div>
 
                 <!-- Navigation Links -->
@@ -25,6 +23,21 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('admin.dati2.index') }}" :active="request()->routeIs('admin.dati2.index')">
                             {{ __('Kabupaten') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('admin.kecamatan.index') }}" :active="request()->routeIs('admin.kecamatan.index')">
+                            {{ __('Kecamatan') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('admin.kelurahan.index') }}" :active="request()->routeIs('admin.kelurahan.index')">
+                            {{ __('Kelurahan') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('admin.rt.index') }}" :active="request()->routeIs('admin.rt.index')">
+                            {{ __('RT') }}
                         </x-jet-nav-link>
                     </div>
                 @elseif (auth()->user()->roles == 'MANAGER')
@@ -174,12 +187,12 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-                                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                             {{ __('Dashboard') }}
                         </x-jet-nav-link>
                     </div> -->
-                    <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+            <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-jet-nav-link href="{{ route('admin.propinsi.index') }}" :active="request()->routeIs('admin.propinsi.index')">
                             {{ __('Propinsi') }}
                         </x-jet-nav-link>

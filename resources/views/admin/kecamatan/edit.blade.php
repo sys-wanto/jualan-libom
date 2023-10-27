@@ -5,7 +5,7 @@
       <a href="#!" onclick="window.history.go(-1); return false;">
         ←
       </a>
-      {{$title}} &raquo; {{$action}} &raquo;  {{$Dati2->kd_dati2_new}} - {{$Dati2->nm_dati2}}
+      {{$title}} &raquo; {{$action}} &raquo;  {{$kecamatan->kd_kecamatan_new}} - {{$kecamatan->nm_kecamatan}}
     </h2>
   </x-slot>
 
@@ -28,7 +28,7 @@
             </div>
           </div>
         @endif
-        <form class="w-full" action="{{ route('admin.dati2.updatenew', array('KD_PROPINSI'=>$Dati2->kd_propinsi_new,'KD_KABUPATEN'=>$Dati2->kd_dati2_new)) }}" method="post"
+        <form class="w-full" action="{{ route('admin.kecamatan.updatenew', array('KD_PROPINSI'=>$kecamatan->kd_propinsi_new,'KD_KABUPATEN'=>$kecamatan->kd_dati2_new,'KD_KECAMATAN'=>$kecamatan->kd_kecamatan_new)) }}" method="post"
               enctype="multipart/form-data">
           @csrf
           @method('put')
@@ -38,24 +38,39 @@
               <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-last-name">
                 Kode Propinsi *
               </label>
-              <select name="kd_propinsi" id="kd_propinsi" disabled="true" class="text-base font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none" placeholder="Payment Method" require>
-                @foreach($propinsi as $p)
+              <select name="kd_propinsi" id="kd_propinsi" disabled onchange="getdati2(this.value)" class="text-base w-full font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none" placeholder="Payment Method" require>
+                @foreach($propinsi as $key =>$p)
+                {{-- {{dd($p)}} --}}
 
-                <option value="{{ $p->kd_propinsi_new }}" {{$Dati2->kd_propinsi_new == $p->kd_propinsi_new ? 'selected':''}}>{{ $p->kd_propinsi_new }} - {{ $p->nm_propinsi }} </option>
+                <option value="{{ $p->kd_propinsi_new }}" {{$kecamatan->kd_propinsi_new == $p->kd_propinsi_new ? 'selected':''}}>{{ $p->kd_propinsi_new }} - {{ $p->nm_propinsi }} </option>
                 @endforeach
               </select>
               <div class="mt-2 text-sm text-gray-500">
-                Kode Propinsi Wajib diisi.
+                Kode Propinsi Wajib diisi. Harus Angka
               </div>
             </div>
           </div>
-
+          <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
+            <div class="w-full">
+              <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-last-name">
+                Kode Kabupaten *
+              </label>
+              <select name="kd_dati2" id="kd_dati2" disabled class="text-base w-full font-medium focus:border-primary focus:outline-none placeholder:text-secondary placeholder:font-normal px-[26px] py-4 border border-grey rounded-[50px] focus:before:appearance-none focus:before:!content-none" placeholder="Payment Method" require>
+                @foreach($dati2 as $p)
+                <option value="{{ $p->kd_dati2_new }}" {{$kecamatan->kd_dati2_new == $p->kd_dati2_new ? 'selected':''}}>{{ $p->kd_dati2_new }} - {{ $p->nm_dati2 }} </option>
+                @endforeach
+              </select>
+              <div class="mt-2 text-sm text-gray-500">
+                Kode Propinsi Wajib diisi. Harus Angka
+              </div>
+            </div>
+          </div>
           <div class="flex flex-wrap px-3 mt-4 mb-6 -mx-3">
             <div class="w-full">
               <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-last-name">
                 Kode {{$title}} *
               </label>
-              <input value="{{ $Dati2->kd_dati2_new }}" readonly="readonly" name="kd_dati2" maxlength="2"
+              <input value="{{ $kecamatan->kd_kecamatan_new }}" name="kd_kecamatan" readonly maxlength="3"
                      class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                      id="grid-last-name" type="text" placeholder="Kode {{$title}}" required>
               <div class="mt-2 text-sm text-gray-500">
@@ -69,7 +84,7 @@
               <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase" for="grid-last-name">
                 Nama {{$title}} *
               </label>
-              <input value="{{ $Dati2->nm_dati2 }}" name="nm_dati2"
+              <input value="{{ $kecamatan->nm_kecamatan }}" name="nm_kecamatan"
                      class="block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
                      id="grid-last-name" type="text" placeholder="Nama  {{$title}}" required>
               <div class="mt-2 text-sm text-gray-500">

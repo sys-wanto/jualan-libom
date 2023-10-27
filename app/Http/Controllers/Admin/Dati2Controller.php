@@ -28,13 +28,11 @@ class Dati2Controller extends Controller
             return DataTables::of($query)
                 ->addColumn('action', function ($Dati2) {
                     return '
-                    
-
                         <a class="block w-full px-2 py-1 mb-1 text-xs text-center text-white transition duration-500 bg-gray-700 border border-gray-700 rounded-md select-none ease hover:bg-gray-800 focus:outline-none focus:shadow-outline" 
                             href="' . route('admin.dati2.editnew', array('KD_PROPINSI' => $Dati2->kd_propinsi_new, 'KD_KABUPATEN' => $Dati2->kd_Dati2_new)) . '">
                             Sunting
                         </a>
-                        <form class="block w-full" onsubmit="return confirm(\'Apakah anda yakin?\');" -block" action="' . route('admin.dati2.destroy', $Dati2->kd_propinsi_new, $Dati2->kd_Dati2_new) . '" method="POST">
+                        <form class="block w-full" onsubmit="return confirm(\'Apakah anda yakin?\');" -block" action="' . route('admin.dati2.deletetenew', array('KD_PROPINSI' => $Dati2->kd_propinsi_new, 'KD_KABUPATEN' => $Dati2->kd_Dati2_new)) . '" method="POST">
                         <button class="w-full px-2 py-1 text-xs text-white transition duration-500 bg-red-500 border border-red-500 rounded-md select-none ease hover:bg-red-600 focus:outline-none focus:shadow-outline" >
                             Hapus
                         </button>
@@ -100,10 +98,30 @@ class Dati2Controller extends Controller
     public function edit(string $kd_propinsi, string $kd_dati2)
     {
         $data = dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->get();
+        // dd($data);
         $data['title'] = $this->title;
         $data['action'] = "Edit";
         if (count($data) > 0) {
             $data['Dati2'] = $data;
+
+            $data['propinsi'] = Propinsi::get();
+            return view('admin.dati2.edit', $data);;
+        } else {
+            return view('admin.dati2', $data);;
+            // return $this->sendError(['Data Tidak Ditemukan']);
+        }
+    }
+
+    public function edit_new(string $kd_propinsi, string $kd_dati2)
+    {
+        $data['data'] = dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->firstOrFail();
+        $data['title'] = $this->title;
+        $data['action'] = "Edit";
+        // dd($data['data']->count()) ;
+        if ($data['data']->count() > 0) {
+            $data['Dati2'] = $data['data'];
+
+            // dd($data['Dati2']);
 
             $data['propinsi'] = Propinsi::get();
             return view('admin.dati2.edit', $data);;
@@ -130,6 +148,20 @@ class Dati2Controller extends Controller
         return redirect()->route('admin.dati2.index');
     }
 
+    public function update_new(Request $request, string $kd_propinsi, string $kd_dati2)
+    {
+        $data['data'] = dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->firstOrFail();
+        $data['title'] = $this->title;
+        $data['action'] = "Edit";
+        if ($data['data']->count() > 0) {
+            // dd();
+            dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->update($request->all('nm_dati2'));
+            // return view('admin.dati2.edit', $data);;
+            return redirect()->route('admin.dati2.index');
+        } else {
+            return view('admin.dati2.', $data);;
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -141,5 +173,17 @@ class Dati2Controller extends Controller
         $Dati2->forceDelete();
 
         return redirect()->route('admin.dati2.index');
+    }
+    public function destroy_new(string $kd_propinsi, string $kd_dati2)
+    {
+        $data['data'] = dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->firstOrFail();
+        $data['title'] = $this->title;
+        $data['action'] = "Edit";
+        if ($data['data']->count() > 0) {
+            dati2::where(['kd_propinsi' => $kd_propinsi, 'kd_dati2' => $kd_dati2])->forceDelete();
+            return redirect()->route('admin.dati2.index');
+        } else {
+            return view('admin.dati2.', $data);;
+        }
     }
 }

@@ -12,27 +12,42 @@
   <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 
   <!-- Libraries -->
-  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
+  <link rel="stylesheet" href="/css/flowbite.min.css">
+  <link rel="stylesheet" href="/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="/css/rowReorder.dataTables.min.css">
+  <link rel="stylesheet" href="/css/dataTables.checkboxes.css">
+  <link rel="stylesheet" href="/css/select.dataTables.min.css">
+  <link rel="stylesheet" href="/css/ionicons.min.css">
+  {{-- <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
   <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
-  <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css">
+  <link href="https://cdn.datatables.net/responsive/2.2.3/css/" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.2.8/css/">
   <link rel="stylesheet"
-        href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/css/dataTables.checkboxes.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.1/css/select.dataTables.min.css">
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/css/">
+  <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.1/css/">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/"> --}}
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-  <script src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js"></script>
-  <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/dataTables.checkboxes.min.js"></script>
-  <script src="https://cdn.datatables.net/select/1.2.1/js/dataTables.select.min.js"></script>
+  <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="/js/dataTables.responsive.min.js"></script>
+  <script type="text/javascript" src="/js/dataTables.rowReorder.min.js"></script>
+  <script type="text/javascript" src="/js/dataTables.checkboxes.min.js"></script>
+  <script type="text/javascript" src="/js/dataTables.select.min.js"></script>
+  <script type="text/javascript" src="/js/flowbite.js"></script>
+  <script type="text/javascript" src="/js/sweetalert2@10.js"></script>
+  {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script> --}}
+  {{-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.3/js/"></script>
+  <script src="https://cdn.datatables.net/rowreorder/1.2.8/js/"></script>
+  <script src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.10/js/"></script>
+  <script src="https://cdn.datatables.net/select/1.2.1/js/"></script>
   <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-  <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+  <script src="https://unpkg.com/flowbite@1.4.7/dist/"></script>
   <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
   {{-- Sweetalert if error exist --}}
   @if (session()->has('error'))

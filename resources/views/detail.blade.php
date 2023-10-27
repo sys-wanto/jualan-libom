@@ -6,7 +6,7 @@
             <ul class="flex items-center gap-5 mb-[50px]">
                 <li
                     class="text-secondary font-normal text-base capitalize after:content-['/'] last:after:content-none inline-flex gap-5">
-                    <a href="{{ route('front.index') }}">Home</a>
+                    <!-- <a href="{{ route('front.index') }}">Home</a> -->
                 </li>
                 <li
                     class="text-secondary font-normal text-base capitalize after:content-['/'] last:after:content-none inline-flex gap-5">

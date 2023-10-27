@@ -28,7 +28,7 @@
             </div>
           </div>
         @endif
-        <form class="w-full" action="{{ route('admin.propinsi.update', $Propinsi->kd_propinsi_new }}" method="post"
+        <form class="w-full" action="{{ route('admin.propinsi.update', $Propinsi->kd_propinsi_new) }}" method="post"
               enctype="multipart/form-data">
           @csrf
           @method('put')
